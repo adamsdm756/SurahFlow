@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> SurahFlow - Full Quran</title>
+    <title>Daily Surah Learner - Full Quran</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -107,7 +107,7 @@
                 <p>I built SurahFlow because I wanted a simple way to memorize and review the Quran consistently myself. As I used it, I realized it could help others on the same journey, so I decided to make it available for everyone.</p>
                 <p>My goal is to keep this tool free, simple, and beneficial for anyone seeking to strengthen their connection with the Quran.</p>
                 <p>
-                    If SurahFlow has benefited you, please consider supporting the project. Your support helps keep SurahFlow free, ad-free, and continuously improving.
+                    If SurahFlow has benefited you, please consider supporting the project. Your support helps keep SurahFlow free, ad-free, and continuously improving for everyone seeking to strengthen their connection with the Quran.
                 </p>
 
                 <p class="text-xs text-slate-500 dark:text-slate-400">
@@ -196,7 +196,12 @@
                     data.data.forEach(surah => {
                         const option = document.createElement('option');
                         option.value = surah.number;
-                        const isDone = completedSurahs.includes(surah.number) ? ' ✓' : '';
+                        
+                        // Styled checkmark wrapper inside dropdown item using Tailwind color utility classes
+                        const hasCompleted = completedSurahs.includes(surah.number);
+                        option.className = hasCompleted ? "text-emerald-600 dark:text-emerald-400 font-semibold" : "";
+                        const isDone = hasCompleted ? ' ✓' : '';
+                        
                         option.textContent = `${surah.number}. ${surah.englishName} (${surah.englishNameTranslation})${isDone}`;
                         surahSelect.appendChild(option);
                     });
@@ -232,7 +237,7 @@
                         if (words.length >= 4) {
                             verses[0].arabic = words.slice(4).join(" ");
                         }
-                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
+                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
                     }
                     
                     currentSurahData = { number: surahId, verses };
@@ -332,8 +337,11 @@
                 completedSurahs.push(currentSurahId);
                 localStorage.setItem('completedSurahs', JSON.stringify(completedSurahs));
                 const selectedOption = surahSelect.options[surahSelect.selectedIndex];
-                if (selectedOption && !selectedOption.textContent.endsWith('✓')) {
-                    selectedOption.textContent += ' ✓';
+                if (selectedOption) {
+                    selectedOption.className = "text-emerald-600 dark:text-emerald-400 font-semibold";
+                    if (!selectedOption.textContent.endsWith('✓')) {
+                        selectedOption.textContent += ' ✓';
+                    }
                 }
             }
             completeBtn.textContent = "Completed! 🎉";
