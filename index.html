@@ -18,58 +18,59 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 min-h-screen text-slate-800 dark:text-slate-200">
 
-    <div class="max-w-2xl mx-auto px-4 py-8">
-        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <div class="max-w-2xl mx-auto px-4 py-4 sm:py-8">
+        <header class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-4 sm:mb-6">
             <div class="text-left">
                 <h1 class="text-3xl font-bold text-emerald-700 dark:text-emerald-400 tracking-tight">SurahFlow</h1>
-                <p class="text-slate-500 dark:text-slate-400 mt-1">Learn and memorize the Quran one surah at a time.</p>
+                <p class="text-slate-500 dark:text-slate-400 mt-1 text-sm sm:text-base">Learn and memorize the Quran one surah at a time.</p>
             </div>
-            <div class="flex items-center gap-2 self-stretch sm:self-center justify-between sm:justify-end">
-                <button id="support-btn" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 dark:hover:bg-rose-950/60 border border-rose-100 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 text-sm font-semibold shadow-sm transition">
+            <div class="flex items-center gap-2 justify-between sm:justify-end">
+                <button id="support-btn" class="flex-1 sm:flex-initial flex items-center justify-center gap-2 h-12 sm:h-auto px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 dark:hover:bg-rose-950/60 border border-rose-100 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 text-sm font-semibold shadow-sm transition touch-manipulation">
                     ❤️ Support Us
                 </button>
-                <button id="theme-toggle" class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <button id="theme-toggle" class="w-12 h-12 sm:w-auto sm:h-auto p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition touch-manipulation">
                     🌙
                 </button>
             </div>
         </header>
 
-        <div class="text-right px-1 mb-6">
+        <div class="text-right px-1 mb-4 sm:mb-6">
             <p class="text-xs text-slate-400 dark:text-slate-500 italic">
                 Help keep SurahFlow free and ad-free for everyone worldwide.
             </p>
         </div>
 
-        <main class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 mb-6">
-            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-4 mb-6">
-                <div class="flex-1 mr-4">
+        <main class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 mb-6">
+            <div class="sticky top-0 bg-white dark:bg-slate-800 z-10 pt-2 pb-4 mb-4 border-b border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+                <div class="flex-1">
                     <span class="text-xs font-semibold tracking-wider text-emerald-600 dark:text-emerald-400 uppercase bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-full">Select Surah</span>
-                    <select id="surah-select" class="block w-full mt-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-bold py-2 px-3 rounded-xl focus:outline-none focus:border-emerald-500 transition text-lg">
+                    <select id="surah-select" class="block w-full mt-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-bold py-2.5 px-3 rounded-xl focus:outline-none focus:border-emerald-500 transition text-base sm:text-lg h-12 sm:h-auto">
                         <option value="">Loading Surahs...</option>
                     </select>
+                    <p id="surah-meta" class="text-xs sm:text-sm text-slate-400 dark:text-slate-400 mt-1"></p>
                 </div>
-                <div class="flex gap-2 self-end mb-1">
-                    <button id="prev-btn" class="p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold">&larr; Prev</button>
-                    <button id="next-btn" class="p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold">Next &rarr;</button>
+                <div class="flex gap-2 justify-between sm:justify-end">
+                    <button id="prev-btn" class="flex-1 sm:flex-initial min-w-[70px] h-12 sm:h-auto p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold touch-manipulation">&larr; Prev</button>
+                    <button id="next-btn" class="flex-1 sm:flex-initial min-w-[70px] h-12 sm:h-auto p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold touch-manipulation">Next &rarr;</button>
                 </div>
             </div>
 
             <div class="mb-4">
-                <button id="play-full-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-sm">
+                <button id="play-full-btn" class="w-full min-h-[48px] bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-sm touch-manipulation">
                     ▶️ Play Whole Surah (Continuous)
                 </button>
             </div>
 
-            <div class="flex gap-3 mb-6">
-                <button id="toggle-text-btn" class="flex-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl transition text-sm">
+            <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                <button id="toggle-text-btn" class="w-full min-h-[44px] bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl transition text-sm touch-manipulation">
                     👁️ Hide Arabic
                 </button>
-                <button id="toggle-trans-btn" class="flex-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl transition text-sm">
+                <button id="toggle-trans-btn" class="w-full min-h-[44px] bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl transition text-sm touch-manipulation">
                     🗣️ Hide Translation
                 </button>
             </div>
 
-            <div id="verses-container" class="space-y-8 my-8 max-h-[50vh] overflow-y-auto px-2">
+            <div id="verses-container" class="space-y-6 my-6 max-h-[55vh] overflow-y-auto px-1 sm:px-2">
                 <div class="text-center text-slate-400 py-8">Initializing application...</div>
             </div>
 
@@ -81,12 +82,12 @@
             </div>
         </main>
 
-        <footer class="bg-emerald-900 dark:bg-emerald-950 text-emerald-100 rounded-2xl p-6 flex justify-between items-center shadow-md">
-            <div>
+        <footer class="bg-emerald-900 dark:bg-emerald-950 text-emerald-100 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 shadow-md">
+            <div class="text-center sm:text-left">
                 <p class="text-emerald-300 dark:text-emerald-400 text-xs font-semibold tracking-widest uppercase">Consistency Tracker</p>
-                <p class="text-lg font-bold mt-1 text-white">Keep going! You've got this.</p>
+                <p class="text-base sm:text-lg font-bold mt-1 text-white">Keep going! You've got this.</p>
             </div>
-            <button id="complete-btn" class="bg-white dark:bg-slate-800 text-emerald-950 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-slate-700 font-bold py-3 px-6 rounded-xl transition shadow-sm">
+            <button id="complete-btn" class="w-full sm:w-auto min-h-[48px] bg-white dark:bg-slate-800 text-emerald-950 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-slate-700 font-bold py-3 px-6 rounded-xl transition shadow-sm touch-manipulation">
                 Mark as Done ✅
             </button>
         </footer>
@@ -101,7 +102,7 @@
                 <span class="text-2xl">﷽ </span>
                 <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mt-2">About SurahFlow</h3>
             </div>
-            <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+            <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-h-[50vh] sm:max-h-[60vh] overflow-y-auto pr-1">
                 <p class="font-semibold text-emerald-600 dark:text-emerald-400">Assalamu Alaikum,</p>
                 <p>I built SurahFlow because I wanted a simple way to memorize and review the Quran consistently myself. As I used it, I realized it could help others on the same journey, so I decided to make it available for everyone.</p>
                 <p>My goal is to keep this tool free, simple, and beneficial for anyone seeking to strengthen their connection with the Quran.</p>
@@ -121,7 +122,7 @@
                 </div>
             </div>
             <div class="mt-6">
-                <a href="https://buy.stripe.com/7sYaEYbTN4tu03e1dx7IY0X" target="_blank" rel="noopener noreferrer" id="modal-donate-link" class="block w-full text-center bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm shadow-sm">
+                <a href="https://buy.stripe.com/7sYaEYbTN4tu03e1dx7IY0X" target="_blank" rel="noopener noreferrer" id="modal-donate-link" class="block w-full text-center bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm shadow-sm min-h-[48px] flex items-center justify-center">
                     ❤️ Support SurahFlow
                 </a>
             </div>
@@ -137,6 +138,7 @@
         let isContinuousPlayActive = false;
 
         const surahSelect = document.getElementById('surah-select');
+        const surahMeta = document.getElementById('surah-meta');
         const versesContainer = document.getElementById('verses-container');
         const audioPlayer = document.getElementById('audio-player');
         const audioStatus = document.getElementById('audio-status');
@@ -195,7 +197,6 @@
                         const option = document.createElement('option');
                         option.value = surah.number;
                         
-                        // Styled checkmark wrapper inside dropdown item using Tailwind color utility classes
                         const hasCompleted = completedSurahs.includes(surah.number);
                         option.className = hasCompleted ? "text-emerald-600 dark:text-emerald-400 font-semibold" : "";
                         const isDone = hasCompleted ? ' ✓' : '';
@@ -229,13 +230,12 @@
                         english: enData.data.ayahs[idx].text
                     }));
                     
-                    // BULLETPROOF WORD-CHOPPER FIX
                     if (surahId !== 1 && surahId !== 9) {
                         let words = verses[0].arabic.trim().split(/\s+/);
                         if (words.length >= 4) {
                             verses[0].arabic = words.slice(4).join(" ");
                         }
-                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
+                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
                     }
                     
                     currentSurahData = { number: surahId, verses };
@@ -250,7 +250,7 @@
             currentSurahData.verses.forEach((verse, idx) => {
                 const verseDiv = document.createElement('div');
                 verseDiv.id = `verse-card-${idx}`;
-                verseDiv.className = `verse-card p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition cursor-pointer border ${verse.isBismillah ? 'border-emerald-200' : 'border-transparent'} hover:border-slate-100 dark:hover:border-slate-700 group`;
+                verseDiv.className = `verse-card p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition cursor-pointer border ${verse.isBismillah ? 'border-emerald-200' : 'border-transparent'} hover:border-slate-100 dark:hover:border-slate-700 group touch-manipulation`;
                 
                 verseDiv.onclick = () => {
                     isContinuousPlayActive = false;
