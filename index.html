@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Surah Learner - Full Quran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .arabic-text { font-family: 'Amiri', serif; font-size: 2.2rem; line-height: 4.5rem; direction: rtl; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen text-slate-800 dark:text-slate-200">
+
+    <div class="max-w-2xl mx-auto px-4 py-8">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div class="text-left">
+                <h1 class="text-3xl font-bold text-emerald-700 dark:text-emerald-400 tracking-tight">SurahFlow</h1>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">Learn and memorize the Quran one surah at a time.</p>
+            </div>
+            <div class="flex items-center gap-2 self-stretch sm:self-center justify-between sm:justify-end">
+                <button id="support-btn" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 dark:hover:bg-rose-950/60 border border-rose-100 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 text-sm font-semibold shadow-sm transition">
+                    ❤️ Support Us
+                </button>
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                    🌙
+                </button>
+            </div>
+        </header>
+
+        <div class="text-right px-1 mb-6">
+            <p class="text-xs text-slate-400 dark:text-slate-500 italic">
+                Help keep SurahFlow free and ad-free for everyone worldwide.
+            </p>
+        </div>
+
+        <main class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 mb-6">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-4 mb-6">
+                <div class="flex-1 mr-4">
+                    <span class="text-xs font-semibold tracking-wider text-emerald-600 dark:text-emerald-400 uppercase bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-full">Select Surah</span>
+                    <select id="surah-select" class="block w-full mt-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-bold py-2 px-3 rounded-xl focus:outline-none focus:border-emerald-500 transition text-lg">
+                        <option value="">Loading Surahs...</option>
+                    </select>
+                    <p id="surah-meta" class="text-sm text-slate-400 dark:text-slate-400 mt-1">---</p>
+                </div>
+                <div class="flex gap-2 self-end mb-1">
+                    <button id="prev-btn" class="p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold">&larr; Prev</button>
+                    <button id="next-btn" class="p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold">Next &rarr;</button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <button id="play-full-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-sm">
+                    ▶️ Play Whole Surah (Continuous)
+                </button>
+            </div>
+
+            <div class="flex gap-3 mb-6">
+                <button id="toggle-text-btn" class="flex-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl transition text-sm">
+                    👁️ Hide Arabic
+                </button>
+                <button id="toggle-trans-btn" class="flex-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl transition text-sm">
+                    🗣️ Hide Translation
+                </button>
+            </div>
+
+            <div id="verses-container" class="space-y-8 my-8 max-h-[50vh] overflow-y-auto px-2">
+                <div class="text-center text-slate-400 py-8">Initializing application...</div>
+            </div>
+
+            <div class="border-t border-slate-100 dark:border-slate-700 pt-6 mt-6">
+                <p class="text-xs font-medium text-slate-400 dark:text-slate-400 mb-2 uppercase tracking-wider" id="audio-status">Audio Recitation (Mishary Alafasy)</p>
+                <audio id="audio-player" controls class="w-full accent-emerald-600 dark:accent-emerald-400">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </main>
+
+        <footer class="bg-emerald-900 dark:bg-emerald-950 text-emerald-100 rounded-2xl p-6 flex justify-between items-center shadow-md">
+            <div>
+                <p class="text-emerald-300 dark:text-emerald-400 text-xs font-semibold tracking-widest uppercase">Consistency Tracker</p>
+                <p class="text-lg font-bold mt-1 text-white">Keep going! You've got this.</p>
+            </div>
+            <button id="complete-btn" class="bg-white dark:bg-slate-800 text-emerald-950 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-slate-700 font-bold py-3 px-6 rounded-xl transition shadow-sm">
+                Mark as Done ✅
+            </button>
+        </footer>
+    </div>
+
+    <div id="support-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-100 dark:border-slate-700 relative transition-transform transform">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition text-lg p-1 focus:outline-none">
+                ✕
+            </button>
+            <div class="text-center mb-4">
+                <span class="text-2xl">﷽ </span>
+                <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mt-2">About SurahFlow</h3>
+            </div>
+            <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+                <p class="font-semibold text-emerald-600 dark:text-emerald-400">Assalamu Alaikum,</p>
+                <p>I built SurahFlow because I wanted a simple way to memorize and review the Quran consistently myself. As I used it, I realized it could help others on the same journey, so I decided to make it available for everyone.</p>
+                <p>My goal is to keep this tool free, simple, and beneficial for anyone seeking to strengthen their connection with the Quran.</p>
+                <p>
+  If SurahFlow has benefited you, please consider supporting the project. Your support helps keep SurahFlow free, ad-free, and continuously improving for everyone seeking to strengthen their connection with the Quran.
+</p>
+
+<p class="text-xs text-slate-500 dark:text-slate-400">
+  You can choose any support amount on the next page. Every contribution, no matter the size, is sincerely appreciated.
+</p>
+
+<p class="italic text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-700">
+  May Allah accept our efforts and make the Quran a source of guidance and blessing in our lives.
+</p>
+                <div class="pt-1 text-xs text-slate-400 dark:text-slate-500 font-medium">
+                    — Adam Yadranji
+                </div>
+            </div>
+            <div class="mt-6">
+                <a href="https://buy.stripe.com/7sYaEYbTN4tu03e1dx7IY0X" target="_blank" rel="noopener noreferrer" id="modal-donate-link" class="block w-full text-center bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm shadow-sm">
+                    ❤️ Support SurahFlow
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSurahId = 1; 
+        let currentSurahData = null;
+        let showArabic = true;
+        let showTranslation = true;
+        let currentFullPlayIndex = -1; 
+        let isContinuousPlayActive = false;
+
+        const surahSelect = document.getElementById('surah-select');
+        const surahMeta = document.getElementById('surah-meta');
+        const versesContainer = document.getElementById('verses-container');
+        const audioPlayer = document.getElementById('audio-player');
+        const audioStatus = document.getElementById('audio-status');
+        
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const toggleTextBtn = document.getElementById('toggle-text-btn');
+        const toggleTransBtn = document.getElementById('toggle-trans-btn');
+        const completeBtn = document.getElementById('complete-btn');
+        const playFullBtn = document.getElementById('play-full-btn');
+        const themeToggle = document.getElementById('theme-toggle');
+
+        const supportBtn = document.getElementById('support-btn');
+        const supportModal = document.getElementById('support-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggle.textContent = '☀️';
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggle.textContent = '🌙';
+        }
+
+        themeToggle.onclick = () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        };
+
+        supportBtn.onclick = () => supportModal.classList.remove('hidden');
+        closeModalBtn.onclick = () => supportModal.classList.add('hidden');
+        window.onclick = (e) => { if (e.target === supportModal) supportModal.classList.add('hidden'); };
+
+        function getAudioUrl(surahNum, verseNum) {
+            const paddedSurah = String(surahNum).padStart(3, '0');
+            const paddedVerse = String(verseNum).padStart(3, '0');
+            return `https://www.everyayah.com/data/Alafasy_128kbps/${paddedSurah}${paddedVerse}.mp3`;
+        }
+
+        async function initializeApp() {
+            try {
+                const response = await fetch('https://api.alquran.cloud/v1/surah');
+                const data = await response.json();
+                if (data.code === 200) {
+                    surahSelect.innerHTML = '';
+                    data.data.forEach(surah => {
+                        const option = document.createElement('option');
+                        option.value = surah.number;
+                        option.textContent = `${surah.number}. ${surah.englishName} (${surah.englishNameTranslation})`;
+                        surahSelect.appendChild(option);
+                    });
+                    surahSelect.onchange = (e) => { currentSurahId = parseInt(e.target.value); fetchSurahContent(currentSurahId); };
+                    fetchSurahContent(currentSurahId);
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        async function fetchSurahContent(surahId) {
+            isContinuousPlayActive = false;
+            audioPlayer.pause();
+            setButtonToPlayState();
+            surahSelect.value = surahId;
+            versesContainer.innerHTML = `<div class="text-center text-slate-400 py-8">Loading Surah data...</div>`;
+            try {
+                const [arRes, enRes] = await Promise.all([
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahId}`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahId}/en.sahih`)
+                ]);
+                const arData = await arRes.json();
+                const enData = await enRes.json();
+                if (arData.code === 200 && enData.code === 200) {
+                    let verses = arData.data.ayahs.map((ayah, idx) => ({
+                        number: ayah.numberInSurah,
+                        arabic: ayah.text,
+                        english: enData.data.ayahs[idx].text
+                    }));
+                    
+                    // BULLETPROOF WORD-CHOPPER FIX
+                    if (surahId !== 1 && surahId !== 9) {
+                        let words = verses[0].arabic.trim().split(/\s+/);
+                        if (words.length >= 4) {
+                            verses[0].arabic = words.slice(4).join(" ");
+                        }
+                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
+                    }
+                    
+                    currentSurahData = { number: surahId, verses };
+                    renderSurah();
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        function renderSurah() {
+            if (!currentSurahData) return;
+            versesContainer.innerHTML = '';
+            currentSurahData.verses.forEach((verse, idx) => {
+                const verseDiv = document.createElement('div');
+                verseDiv.id = `verse-card-${idx}`;
+                verseDiv.className = `verse-card p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition cursor-pointer border ${verse.isBismillah ? 'border-emerald-200' : 'border-transparent'} hover:border-slate-100 dark:hover:border-slate-700 group`;
+                
+                verseDiv.onclick = () => {
+                    isContinuousPlayActive = false;
+                    setButtonToPlayState();
+                    audioPlayer.src = verse.isBismillah ? getAudioUrl(1, 1) : getAudioUrl(currentSurahData.number, verse.number);
+                    audioPlayer.play();
+                    highlightVerse(idx);
+                };
+
+                verseDiv.innerHTML = `
+                    <div class="flex justify-between items-start gap-4 mb-3">
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-900 w-6 h-6 rounded-full flex items-center justify-center group-hover:bg-emerald-100 dark:group-hover:bg-emerald-950 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">${verse.isBismillah ? 'B' : verse.number}</span>
+                        <p class="arabic-text text-right flex-1 ${verse.isBismillah ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-800 dark:text-slate-100'} ${showArabic ? '' : 'invisible select-none'}">${verse.arabic}</p>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 pl-10 leading-relaxed ${showTranslation ? '' : 'hidden'}">${verse.english}</p>
+                `;
+                versesContainer.appendChild(verseDiv);
+            });
+        }
+
+        function setButtonToPlayState() {
+            playFullBtn.textContent = "▶️ Play Whole Surah (Continuous)";
+            playFullBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'dark:bg-amber-700', 'dark:hover:bg-amber-600');
+            playFullBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'dark:bg-emerald-700', 'dark:hover:bg-emerald-600');
+        }
+
+        function setButtonToPauseState() {
+            playFullBtn.textContent = "⏸️ Pause Continuous Recitation";
+            playFullBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700', 'dark:bg-emerald-700', 'dark:hover:bg-emerald-600');
+            playFullBtn.classList.add('bg-amber-600', 'hover:bg-amber-700', 'dark:bg-amber-700', 'dark:hover:bg-amber-600');
+        }
+
+        function highlightVerse(index) {
+            document.querySelectorAll('.verse-card').forEach(c => c.classList.remove('bg-emerald-50/70', 'dark:bg-emerald-950/30', 'border-emerald-200', 'dark:border-emerald-800'));
+            const activeCard = document.getElementById(`verse-card-${index}`);
+            if (activeCard) {
+                activeCard.classList.add('bg-emerald-50/70', 'dark:bg-emerald-950/30', 'border-emerald-200', 'dark:border-emerald-800');
+                activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        playFullBtn.onclick = () => {
+            if (!currentSurahData) return;
+            if (isContinuousPlayActive) {
+                audioPlayer.pause();
+                isContinuousPlayActive = false;
+                setButtonToPlayState();
+            } else {
+                isContinuousPlayActive = true;
+                currentFullPlayIndex = 0;
+                setButtonToPauseState();
+                const v = currentSurahData.verses[currentFullPlayIndex];
+                audioPlayer.src = v.isBismillah ? getAudioUrl(1, 1) : getAudioUrl(currentSurahData.number, v.number);
+                audioPlayer.play();
+                highlightVerse(currentFullPlayIndex);
+            }
+        };
+
+        audioPlayer.onended = () => {
+            if (isContinuousPlayActive && currentSurahData) {
+                currentFullPlayIndex++;
+                if (currentFullPlayIndex < currentSurahData.verses.length) {
+                    const v = currentSurahData.verses[currentFullPlayIndex];
+                    audioPlayer.src = v.isBismillah ? getAudioUrl(1, 1) : getAudioUrl(currentSurahData.number, v.number);
+                    audioPlayer.play();
+                    highlightVerse(currentFullPlayIndex);
+                } else {
+                    isContinuousPlayActive = false;
+                    setButtonToPlayState();
+                }
+            }
+        };
+
+        prevBtn.onclick = () => { if (currentSurahId > 1) { currentSurahId--; fetchSurahContent(currentSurahId); } };
+        nextBtn.onclick = () => { if (currentSurahId < 114) { currentSurahId++; fetchSurahContent(currentSurahId); } };
+        toggleTextBtn.onclick = () => { showArabic = !showArabic; toggleTextBtn.textContent = showArabic ? "👁️ Hide Arabic" : "👁️ Show Arabic"; renderSurah(); };
+        toggleTransBtn.onclick = () => { showTranslation = !showTranslation; toggleTransBtn.textContent = showTranslation ? "🗣️ Hide Translation" : "🗣️ Show Translation"; renderSurah(); };
+        completeBtn.onclick = () => {
+            completeBtn.textContent = "Completed! 🎉";
+            setTimeout(() => { completeBtn.textContent = "Mark as Done ✅"; if (currentSurahId < 114) nextBtn.click(); }, 1500);
+        };
+
+        initializeApp();
+    </script>
+</body>
+</html>
