@@ -47,7 +47,6 @@
                     <select id="surah-select" class="block w-full mt-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-bold py-2 px-3 rounded-xl focus:outline-none focus:border-emerald-500 transition text-lg">
                         <option value="">Loading Surahs...</option>
                     </select>
-                    <p id="surah-meta" class="text-sm text-slate-400 dark:text-slate-400 mt-1">---</p>
                 </div>
                 <div class="flex gap-2 self-end mb-1">
                     <button id="prev-btn" class="p-2.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition text-slate-600 dark:text-slate-200 font-semibold">&larr; Prev</button>
@@ -138,7 +137,6 @@
         let isContinuousPlayActive = false;
 
         const surahSelect = document.getElementById('surah-select');
-        const surahMeta = document.getElementById('surah-meta');
         const versesContainer = document.getElementById('verses-container');
         const audioPlayer = document.getElementById('audio-player');
         const audioStatus = document.getElementById('audio-status');
@@ -237,7 +235,7 @@
                         if (words.length >= 4) {
                             verses[0].arabic = words.slice(4).join(" ");
                         }
-                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
+                        verses.unshift({ number: 0, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.", isBismillah: true });
                     }
                     
                     currentSurahData = { number: surahId, verses };
